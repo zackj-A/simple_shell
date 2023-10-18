@@ -1,5 +1,5 @@
 #ifndef _SHELL_H_
-#define _SHELL_H_
+define _SHELL_H_
 
 #include <sys/stat.h>
 #include <limits.h>
@@ -112,7 +112,7 @@ typedef struct builtin
 
 
 /* toem_shloop.c */
-int hsh(info_t *, char **);
+void hsh(info_t *info, char **av);
 int find_builtin(info_t *);
 void find_cmd(info_t *);
 void fork_cmd(info_t *);
@@ -126,8 +126,8 @@ char *find_path(info_t *, char *, char *);
 int loophsh(char **);
 
 /* toem_errors.c */
-void _eputs(char *);
-int _eputchar(char);
+void _eputs(const char *str);
+void _eputchar(char c);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
@@ -197,7 +197,7 @@ char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
-int populate_env_list(info_t *);
+void populate_env_list(info_t *info);
 
 /* toem_getenv.c */
 char **get_environ(info_t *);
@@ -207,7 +207,7 @@ int _setenv(info_t *, char *, char *);
 /* toem_history.c */
 char *get_history_file(info_t *info);
 int write_history(info_t *info);
-int read_history(info_t *info);
+void read_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
