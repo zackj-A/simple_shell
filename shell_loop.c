@@ -6,7 +6,7 @@
  * @av: the argument vector
  * Return: 0 on success, 1 on error, or error code
  */
-int hsh(info_t *info, char **av)
+void hsh(info_t *info, char **av)
 {
 	ssize_t f = 0;
 	int builtin_ret = 0;
@@ -39,7 +39,6 @@ int hsh(info_t *info, char **av)
 			exit(info->status);
 		exit(info->err_num);
 	}
-	return (builtin_ret);
 }
 
 /**

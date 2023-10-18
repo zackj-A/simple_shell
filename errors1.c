@@ -46,37 +46,38 @@ void print_error(info_t *info, char *estr)
 
 /**
  * print_d - function prints a decimal (integer) number (base 10)
- * @input: input
- * @fd: the filedescriptor to write
+ * @input: the input
+ * @fd: the filedescriptor to write to
+ *
  * Return: number of characters printed
  */
 int print_d(int input, int fd)
 {
-	int (*__putchar)(char) = _putchar;
-	int b, count = 0;
-	unsigned int _abs_, current;
+    int b, count = 0;
+    unsigned int _abs_, current;
 
-	if (fd == STDERR_FILENO)
-		__putchar = _eputchar;
-	if (input < 0)
-	{
-		_abs_ = -input;
-		__putchar('-');
-		count++;
-	}
-	else
-		_abs_ = input;
-	current = _abs_;
+    if (input < 0) {
+        _abs_ = -input;
+        if (fd == STDERR_FILENO) {
+            _eputchar('-');
+        } else {
+            _putchar('-');
+        }
+        count++;
+    } else {
+        _abs_ = input;
+    }
+    current = _abs_;
 	for (b = 1000000000; b > 1; b /= 10)
 	{
 		if (_abs_ / b)
 		{
-			__putchar('0' + current / b);
+			_putchar('0' + current / b);
 			count++;
 		}
 		current %= b;
 	}
-	__putchar('0' + current);
+	_putchar('0' + current);
 	count++;
 
 	return (count);

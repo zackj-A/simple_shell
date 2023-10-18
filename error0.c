@@ -5,7 +5,7 @@
  * @str: string to be printed
  * Return: nothing
  */
-void _eputs(char *str)
+void _eputs(const char *str)
 {
 	int a = 0;
 
@@ -24,7 +24,7 @@ void _eputs(char *str)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-int _eputchar(char c)
+void _eputchar(char c)
 {
 	static int a;
 	static char buf[WRITE_BUF_SIZE];
@@ -36,7 +36,6 @@ int _eputchar(char c)
 	}
 	if (c != BUF_FLUSH)
 		buf[a++] = c;
-	return (1);
 }
 
 /**

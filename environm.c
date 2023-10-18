@@ -74,7 +74,7 @@ int _myunsetenv(info_t *info)
  * @info: Structure containing potential arguments
  * Return: Always 0
  */
-int populate_env_list(info_t *info)
+void populate_env_list(info_t *info)
 {
 	list_t *node = NULL;
 	size_t l;
@@ -82,5 +82,4 @@ int populate_env_list(info_t *info)
 	for (l = 0; environ[l]; l++)
 		add_node_end(&node, environ[l], 0);
 	info->env = node;
-	return (0);
 }
