@@ -53,21 +53,27 @@ void print_error(info_t *info, char *estr)
  */
 int print_d(int input, int fd)
 {
-    int b, count = 0;
-    unsigned int _abs_, current;
+	int b, count = 0;
+	unsigned int _abs_, current;
 
-    if (input < 0) {
-        _abs_ = -input;
-        if (fd == STDERR_FILENO) {
-            _eputchar('-');
-        } else {
-            _putchar('-');
-        }
-        count++;
-    } else {
-        _abs_ = input;
-    }
-    current = _abs_;
+	if (input < 0)
+	{
+		_abs_ = -input;
+		if (fd == STDERR_FILENO)
+		{
+			_eputchar('-');
+		}
+		else
+		{
+			_putchar('-');
+		}
+		count++;
+	}
+	else
+	{
+		_abs_ = input;
+	}
+	current = _abs_;
 	for (b = 1000000000; b > 1; b /= 10)
 	{
 		if (_abs_ / b)
@@ -84,7 +90,7 @@ int print_d(int input, int fd)
 }
 
 /**
- * convert_number - a converter function
+ * convert_number - converter function
  * @num: number
  * @base: base
  * @flags: argument flags

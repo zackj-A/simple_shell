@@ -1,15 +1,22 @@
 #include "shell.h"
 #include <stdio.h>
-
+/**
+ * _eputs - main function
+ * @str: string
+ */
 void _eputs(const char *str)
 {
-    fprintf(stderr, "%s", str);
+	fprintf(stderr, "%s", str);
 }
-
-int _eputchar(char c) 
+/**
+ * _eputchar - main function
+ * @c: character
+ * Return: o
+ */
+int _eputchar(char c)
 {
-    fputc(c, stderr);
-    return (0);
+	fputc(c, stderr);
+	return (0);
 }
 
 /**
@@ -19,26 +26,25 @@ int _eputchar(char c)
  * Return: The number of characters written, or -1 on error
  */
 
-int _putsfd(char *str, int fd) 
+int _putsfd(char *str, int fd)
 {
-    int num_written = 0;
+	int num_written = 0;
 
-    if (!str || fd < 0) 
-    {
-        return -1;
-    }
-
-    while (*str) 
-    {
-        if (write(fd, str, 1) < 0) 
+	if (!str || fd < 0)
 	{
-            return -1;
-        }
-        num_written++;
-        str++;
-    }
+		return (-1);
+	}
 
-    return num_written;
+	while (*str)
+	{
+		if (write(fd, str, 1) < 0)
+		{
+			return (-1);
+		}
+		num_written++;
+		str++;
+	}
+	return (num_written);
 }
 
 /**
@@ -47,20 +53,19 @@ int _putsfd(char *str, int fd)
  * @fd: The file descriptor to write
  * Return: 1 on success, -1 on error
  */
-int _putfd(char c, int fd) 
+int _putfd(char c, int fd)
 {
-    if (fd < 0) 
-    {
-        return -1;
-    }
+	if (fd < 0)
+	{
+		return (-1);
+	}
 
-    if (write(fd, &c, 1) == 1) 
-    {
-        return 1;
-    } 
-    else 
-    {
-        return -1;
-    }
+	if (write(fd, &c, 1) == 1)
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
 }
-
