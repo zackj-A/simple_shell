@@ -24,7 +24,7 @@ void _eputs(const char *str)
  * Return: On success 1.
  * On error, -1 is returned, and errno is set appropriately.
  */
-void _eputchar(char c)
+int _eputchar(char c)
 {
 	static int a;
 	static char buf[WRITE_BUF_SIZE];
@@ -36,6 +36,7 @@ void _eputchar(char c)
 	}
 	if (c != BUF_FLUSH)
 		buf[a++] = c;
+	return (1);
 }
 
 /**

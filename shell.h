@@ -1,27 +1,16 @@
 #ifndef _SHELL_H_
 #define _SHELL_H_
 
-#include <sys/stat.h>
-#include <limits.h>
-#include <fcntl.h>
-#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-
-/* for command chaining */
-#define CMD_NORM	0
-#define CMD_OR		1
-#define CMD_AND		2
-#define CMD_CHAIN	3
-
-/* for read/write buffers */
-#define READ_BUF_SIZE 1024
-#define WRITE_BUF_SIZE 1024
-#define BUF_FLUSH -1
+#include <sys/stat.h>
+#include <limits.h>
+#include <fcntl.h>
+#include <errno.h>
 
 /* for convert_number() */
 #define CONVERT_LOWERCASE	1
@@ -31,11 +20,21 @@
 #define USE_GETLINE 0
 #define USE_STRTOK 0
 
+/* for read/write buffers */
+#define READ_BUF_SIZE 1024
+#define WRITE_BUF_SIZE 1024
+#define BUF_FLUSH -1
+
+/* for command chaining */
+#define CMD_NORM	0
+#define CMD_OR		1
+#define CMD_AND		2
+#define CMD_CHAIN	3
+
 #define HIST_FILE	".simple_shell_history"
 #define HIST_MAX	4096
 
 extern char **environ;
-
 
 /**
  * struct liststr - singly linked list
@@ -98,7 +97,6 @@ typedef struct passinfo
 #define INFO_INIT \
 {NULL, NULL, NULL, 0, 0, 0, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, \
 	0, 0, 0}
-
 /**
  *struct builtin - contains a builtin string and related function
  *@type: the builtin command flag
@@ -110,24 +108,12 @@ typedef struct builtin
 	int (*func)(info_t *);
 } builtin_table;
 
-
-/* toem_shloop.c */
-void hsh(info_t *info, char **av);
-int find_builtin(info_t *);
-void find_cmd(info_t *);
-void fork_cmd(info_t *);
-
-/* toem_parser.c */
-int is_cmd(info_t *, char *);
-char *dup_chars(char *, int, int);
-char *find_path(info_t *, char *, char *);
-
 /* loophsh.c */
 int loophsh(char **);
 
 /* toem_errors.c */
 void _eputs(const char *str);
-void _eputchar(char c);
+int _eputchar(char);
 int _putfd(char c, int fd);
 int _putsfd(char *str, int fd);
 
@@ -136,6 +122,17 @@ int _strlen(char *);
 int _strcmp(char *, char *);
 char *starts_with(const char *, const char *);
 char *_strcat(char *, char *);
+
+/* toem_shloop.c */
+int hsh(info_t *, char **);
+int find_builtin(info_t *);
+void find_cmd(info_t *);
+void fork_cmd(info_t *);
+
+/* toem_parser.c */
+int is_cmd(info_t *, char *);
+char *dup_chars(char *, int, int);
+char *find_path(info_t *, char *, char *);
 
 /* toem_string1.c */
 char *_strcpy(char *, char *);
@@ -197,7 +194,7 @@ char *_getenv(info_t *, const char *);
 int _myenv(info_t *);
 int _mysetenv(info_t *);
 int _myunsetenv(info_t *);
-void populate_env_list(info_t *info);
+int populate_env_list(info_t *);
 
 /* toem_getenv.c */
 char **get_environ(info_t *);
@@ -207,11 +204,11 @@ int _setenv(info_t *, char *, char *);
 /* toem_history.c */
 char *get_history_file(info_t *info);
 int write_history(info_t *info);
-void read_history(info_t *info);
+int read_history(info_t *info);
 int build_history_list(info_t *info, char *buf, int linecount);
 int renumber_history(info_t *info);
 
-/* toem_lists.c */
+/* toem_list0.c */
 list_t *add_node(list_t **, const char *, int);
 list_t *add_node_end(list_t **, const char *, int);
 size_t print_list_str(const list_t *);

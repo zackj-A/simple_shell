@@ -1,50 +1,28 @@
 #include "shell.h"
 
 /**
- * _strcpy - function to copy a string
- * @dest: destination
- * @src: source
- * Return: pointer to destination
+ * _putchar - Function to write the character c to stdout
+ * @c: The character to print
+ * Return: On success 1.
+ * On error, -1 is returned, and errno is set appropriately.
  */
-char *_strcpy(char *dest, char *src)
+int _putchar(char c)
 {
-	int l = 0;
+	static int l;
+	static char buf[WRITE_BUF_SIZE];
 
-	if (dest == src || src == 0)
-		return (dest);
-	while (src[l])
+	if (c == BUF_FLUSH || l >= WRITE_BUF_SIZE)
 	{
-		dest[l] = src[l];
-		l++;
+		write(1, buf, l);
+		l = 0;
 	}
-	dest[l] = 0;
-	return (dest);
+	if (c != BUF_FLUSH)
+		buf[l++] = c;
+	return (1);
 }
 
 /**
- * _strdup - function to duplicate a string
- * @str: string to be duplicate
- * Return: pointer to the duplicated string
- */
-char *_strdup(const char *str)
-{
-	int i = 0;
-	char *ret;
-
-	if (str == NULL)
-		return (NULL);
-	while (*str++)
-		i++;
-	ret = malloc(sizeof(char) * (i + 1));
-	if (!ret)
-		return (NULL);
-	for (i++; i--;)
-		ret[i] = *--str;
-	return (ret);
-}
-
-/**
- *_puts - function to print an input string
+ *_puts - To print an input string
  *@str: string to be printed
  * Return: Nothing
  */
@@ -62,22 +40,44 @@ void _puts(char *str)
 }
 
 /**
- * _putchar -function to  write the character c to stdout
- * @c: The character
- * Return: On success 1.
- * On error, -1 is returned, and errno is set appropriately.
+ * _strdup - Function to duplicate a string
+ * @str: String to duplicate
+ * Return: pointer to the duplicated string
  */
-int _putchar(char c)
+char *_strdup(const char *str)
 {
-	static int l;
-	static char buf[WRITE_BUF_SIZE];
+	int length = 0;
+	char *ret;
 
-	if (c == BUF_FLUSH || l >= WRITE_BUF_SIZE)
+	if (str == NULL)
+		return (NULL);
+	while (*str++)
+		length++;
+	ret = malloc(sizeof(char) * (length + 1));
+	if (!ret)
+		return (NULL);
+	for (length++; length--;)
+		ret[length] = *--str;
+	return (ret);
+}
+
+/**
+ * _strcpy - To copy a string
+ * @dest: destination
+ * @src: source
+ * Return: pointer to destination
+ */
+char *_strcpy(char *dest, char *src)
+{
+	int l = 0;
+
+	if (dest == src || src == 0)
+		return (dest);
+	while (src[l])
 	{
-		write(1, buf, l);
-		l = 0;
+		dest[l] = src[l];
+		l++;
 	}
-	if (c != BUF_FLUSH)
-		buf[l++] = c;
-	return (1);
+	dest[l] = 0;
+	return (dest);
 }

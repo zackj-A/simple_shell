@@ -56,7 +56,7 @@ int write_history(info_t *info)
  * @info: the parameter
  * Return: histcount on success, 0 otherwise
  */
-void read_history(info_t *info)
+int read_history(info_t *info)
 {
 	int l, last = 0, linecount = 0;
 	ssize_t fd, rdlen, fsize = 0;
@@ -91,6 +91,7 @@ void read_history(info_t *info)
 	while (info->histcount-- >= HIST_MAX)
 		delete_node_at_index(&(info->history), 0);
 	renumber_history(info);
+	return (info->histcount);
 }
 
 /**

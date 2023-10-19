@@ -2,57 +2,58 @@
 
 /**
  * is_chain - To test if current char in buffer is a chain delimeter
- * @info: the parameter
- * @buf: the char buffer
+ * @info: the struct
+ * @buf: char buffer
  * @p: address of current position in buf
  * Return: 1 if chain delimeter, 0 otherwise
  */
 int is_chain(info_t *info, char *buf, size_t *p)
 {
-	size_t y = *p;
+	size_t h = *p;
 
-	if (buf[y] == '|' && buf[y + 1] == '|')
+	if (buf[h] == '|' && buf[h + 1] == '|')
 	{
-		buf[y] = 0;
-		y++;
+		buf[h] = 0;
+		h++;
 		info->cmd_buf_type = CMD_OR;
 	}
-	else if (buf[y] == '&' && buf[y + 1] == '&')
+	else if (buf[h] == '&' && buf[h + 1] == '&')
 	{
-		buf[y] = 0;
-		y++;
+		buf[h] = 0;
+		h++;
 		info->cmd_buf_type = CMD_AND;
 	}
-	else if (buf[y] == ';')
+	else if (buf[h] == ';')
 	{
-		buf[y] = 0;
+		buf[h] = 0;
 		info->cmd_buf_type = CMD_CHAIN;
 	}
 	else
 		return (0);
-	*p = y;
+	*p = h;
 	return (1);
 }
 
 /**
  * check_chain - To check we should continue chaining based on last status
- * @info: the parameter
- * @buf:  char buffer
- * @p: current position in buf
+ * @info: the  struct
+ * @buf: the char buffer
+ * @p: address of current position in buf
  * @i: starting position in buf
  * @len: length of buf
+ *
  * Return: Void
  */
 void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 {
-	size_t y = *p;
+	size_t h = *p;
 
 	if (info->cmd_buf_type == CMD_AND)
 	{
 		if (info->status)
 		{
 			buf[i] = 0;
-			y = len;
+			h = len;
 		}
 	}
 	if (info->cmd_buf_type == CMD_OR)
@@ -60,16 +61,16 @@ void check_chain(info_t *info, char *buf, size_t *p, size_t i, size_t len)
 		if (!info->status)
 		{
 			buf[i] = 0;
-			y = len;
+			h = len;
 		}
 	}
 
-	*p = y;
+	*p = h;
 }
 
 /**
- * replace_alias - To replace an aliases in the tokenized string
- * @info: the parameter
+ * replace_alias - Function to replace an aliases in the tokenized string
+ * @info: the struct
  * Return: 1 if replaced, 0 otherwise
  */
 int replace_alias(info_t *info)
@@ -96,8 +97,8 @@ int replace_alias(info_t *info)
 }
 
 /**
- * replace_vars - To replace vars in the tokenized string
- * @info: the parameter
+ * replace_vars - Function to replace vars in the tokenized string
+ * @info: the struct
  * Return: 1 if replaced, 0 otherwise
  */
 int replace_vars(info_t *info)
@@ -130,15 +131,14 @@ int replace_vars(info_t *info)
 			continue;
 		}
 		replace_string(&info->argv[l], _strdup(""));
-
 	}
 	return (0);
 }
 
 /**
- * replace_string - function to replace string
- * @old: old string
- * @new: new string
+ * replace_string - Function to replace string
+ * @old: address of old string
+ * @new: new strin
  * Return: 1 if replaced, 0 otherwise
  */
 int replace_string(char **old, char *new)
